@@ -59,7 +59,7 @@ class Aikataulu {
                 aikataulu.set(i,pair);
             }
         }
-        System.out.println(aikataulu);
+        //System.out.println(aikataulu);
 
         this.aikataulu = aikataulu;
     }

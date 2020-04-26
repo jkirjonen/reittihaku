@@ -32,24 +32,22 @@ public class App {
 
         System.out.println(pysakit);
 
-        Aikataulu aikataulu = new Aikataulu();
+
         ArrayList<Aikataulu> aikataulut = new ArrayList<>();
 
         for(Pysakki pysakki:pysakit){
+            Aikataulu aikataulu = new Aikataulu();
             aikataulu.luoAikataulu(pysakki,pysakit);
+            aikataulut.add(aikataulu);
         }
 
-        ArrayList<Pair<String, Integer>> aikataulu2 = aikataulu.getAikataulu();
-
-        System.out.println(aikataulu2.get(0).getValue0());
-
-
+        //aikataulut.forEach(e -> System.out.println(e.aikataulu.toString()));
 
         String lahto = "A";
-        String loppu = "E";
+        String loppu = "K";
 
         Reittihaku reittihaku = new Reittihaku();
-        ArrayList<Pair<String, Integer>> reitti = reittihaku.reittihaku(lahto,loppu,aikataulut2,pysakit,visited);
+        ArrayList<Pair<String, Integer>> reitti = reittihaku.reittihaku(lahto,loppu,aikataulut,pysakit,visited);
 
         System.out.print(lahto);reitti.forEach(e -> System.out.print(" -> " + e.getValue0()));;
 
@@ -68,7 +66,7 @@ class Reittihaku {
     ArrayList<Pair<String, Integer>> reitti = new ArrayList<>();
 
 
-    public ArrayList<Pair<String, Integer>> reittihaku(String lahto, String loppu, ArrayList<Pair<String, Integer>> aikataulut, ArrayList<Pysakki> pysakit,ArrayList<String> visited) {
+    public ArrayList<Pair<String, Integer>> reittihaku(String lahto, String loppu, ArrayList<Aikataulu> aikataulut, ArrayList<Pysakki> pysakit,ArrayList<String> visited) {
         boolean perilla = false;
         ArrayList<String> visited2 = new ArrayList<>();
         visited2 = visited;
