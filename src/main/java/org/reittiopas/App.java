@@ -7,7 +7,13 @@ import org.json.*;
 
 import java.io.File;
 import java.io.FileReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Arrays.*;
+import org.apache.commons.lang3.*;
+
 
 public class App {
 
@@ -30,7 +36,7 @@ public class App {
             pysakit.add(pysakki);
         }
 
-        System.out.println(pysakit);
+        //System.out.println(pysakit);
 
 
         ArrayList<Aikataulu> aikataulut = new ArrayList<>();
@@ -41,86 +47,48 @@ public class App {
             aikataulut.add(aikataulu);
         }
 
+        ArrayList<Linja> linjat = new ArrayList<>();
+        List<String> linjatemp = new ArrayList<>(linjastotJson.keySet());
+
+
+        for(int i=0;i<2;i++) {
+            String suunta = "Meno";
+            if(i == 1){
+                suunta = "Tulo";
+            }
+            for (String vari : linjatemp) {
+                ArrayList<Pysakki> linja = new ArrayList<>();
+                List<Object> list = linjastotJson.getJSONArray(vari).toList();
+                if(i == 1){
+                    Collections.reverse(list);
+                }
+                for (Object obj : list) {
+                    for (Pysakki stop : pysakit) {
+                        if (obj.toString().equalsIgnoreCase(stop.getNimi())) {
+                            linja.add(stop);
+                        }
+                    }
+                }
+                String nimi = vari + suunta;
+                Linja linja1 = new Linja(nimi, linja);
+                linjat.add(linja1);
+            }
+        }
+
+        //linjat.forEach(e -> System.out.println(e.getVari() + " Pysakit: " + e.getPysakit().toString()));
+
         //aikataulut.forEach(e -> System.out.println(e.aikataulu.toString()));
 
         String lahto = "A";
-        String loppu = "K";
+        String loppu = "R";
 
         Reittihaku reittihaku = new Reittihaku();
         ArrayList<Pair<String, Integer>> reitti = reittihaku.reittihaku(lahto,loppu,aikataulut,pysakit,visited);
 
-        System.out.print(lahto);reitti.forEach(e -> System.out.print(" -> " + e.getValue0()));;
-
-
+        //System.out.print(lahto);reitti.forEach(e -> System.out.print(" -> " + e.getValue0()));;
 
     }
 
 
-}
-
-class Reittihaku {
-    String lahto;
-    String loppu;
-    ArrayList<Aikataulu> aikataulut;
-    ArrayList<Pysakki> pysakit;
-    ArrayList<Pair<String, Integer>> reitti = new ArrayList<>();
-
-
-    public ArrayList<Pair<String, Integer>> reittihaku(String lahto, String loppu, ArrayList<Aikataulu> aikataulut, ArrayList<Pysakki> pysakit,ArrayList<String> visited) {
-        boolean perilla = false;
-        ArrayList<String> visited2 = new ArrayList<>();
-        visited2 = visited;
-
-        for(String s:visited2){
-            if(s.equalsIgnoreCase(lahto))
-                return reitti;
-        }
-        visited2.add(lahto);
-
-        for (Pysakki pysakki : pysakit) {
-            if (pysakki.getNimi().equalsIgnoreCase(lahto)) {
-                if(pysakki.getMihin().size() == 0){
-                    return reitti;
-                }
-                ArrayList<Pair<String, Integer>> mihin = pysakki.getMihin();
-                Pair<String,Integer> nopein = mihin.get(0);
-                int pienin = 100;
-
-                for(Pair pair : mihin){
-                    if (pair.getValue0().toString().equalsIgnoreCase(loppu)) {
-                        reitti.add(pair);
-                        perilla = true;
-                        return reitti;
-                    }else {
-
-                        for (Aikataulu taulu : aikataulut) {
-                            //System.out.println(taulu.getPysakki().getNimi());
-                            if (taulu.getPysakki().getNimi().equalsIgnoreCase(pair.getValue0().toString())) {
-                                for (Pair table : taulu.getAikataulu()) {
-                                    if (table.getValue0().toString().equalsIgnoreCase(loppu)) {
-                                        if (Integer.parseInt(table.getValue1().toString()) < pienin) {
-                                            pienin = Integer.parseInt(table.getValue1().toString());
-                                            nopein = pair;
-                                            //System.out.println("testi " + table.getValue0().toString() + taulu.getPysakki().getNimi());
-
-                                        }
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-
-                }
-                if(!perilla){
-                    reitti.add(nopein);
-                    reittihaku(nopein.getValue0(),loppu,aikataulut,pysakit,visited2);
-                }
-
-            }
-
-        }
-        return reitti;
-    }
 }
 
