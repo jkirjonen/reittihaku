@@ -75,17 +75,57 @@ public class App {
             }
         }
 
-        //linjat.forEach(e -> System.out.println(e.getVari() + " Pysakit: " + e.getPysakit().toString()));
+        linjat.forEach(e -> System.out.println(e.getVari() + " Pysakit: " + e.getPysakit().toString()));
 
         //aikataulut.forEach(e -> System.out.println(e.aikataulu.toString()));
 
         String lahto = "A";
-        String loppu = "R";
+        String loppu = "K";
 
         Reittihaku reittihaku = new Reittihaku();
         ArrayList<Pair<String, Integer>> reitti = reittihaku.reittihaku(lahto,loppu,aikataulut,pysakit,visited);
 
-        //System.out.print(lahto);reitti.forEach(e -> System.out.print(" -> " + e.getValue0()));;
+        for(Pysakki pysakki:pysakit){
+            if(pysakki.getNimi().equalsIgnoreCase(lahto)){
+                reitti.add(0,new Pair<>(pysakki.getNimi(),0));
+                break;
+            }
+        }
+
+        reitti.forEach(e -> System.out.print(" -> " + e.getValue0()));;
+
+        ArrayList<Pair<String,String>> linjareitti = new ArrayList<>();
+
+        for(int pair=0;pair<reitti.size();pair++){
+            linjalooppi:
+            for(int linja=0;linja<linjat.size();linja++){
+                for(int pysakki=0;pysakki<linjat.get(linja).getPysakit().size();pysakki++){
+                    if(reitti.get(pair).getValue0().equalsIgnoreCase(String.valueOf(linjat.get(linja).getPysakit().get(pysakki)))){
+                        if(pair < reitti.size()-1 && pysakki < linjat.get(linja).getPysakit().size()-1){
+                            if(reitti.get(pair +1).getValue0().equalsIgnoreCase(String.valueOf(linjat.get(linja).getPysakit().get(pysakki +1)))){
+                                Pair<String,String> reitille = new Pair<>(reitti.get(pair).getValue0(),linjat.get(linja).vari);
+                                linjareitti.add(reitille);
+                                if(pair == reitti.size() -2){
+                                    Pair<String,String> viimeinen = new Pair<>(reitti.get(pair +1).getValue0(),linjat.get(linja).vari);
+                                    linjareitti.add(viimeinen);
+                                }
+                                break linjalooppi;
+                        }
+
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+
+        System.out.println(linjareitti.size());
+
+        linjareitti.forEach(e -> System.out.print(e.getValue1() + " " + e.getValue0() + " -> "));
+
+
 
     }
 

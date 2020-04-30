@@ -38,7 +38,10 @@ class Pysakki {
 
 
     }
-
+    public String toString(){
+        return nimi;
+    }
+/*
     public String toString(){
         String temp = "Pysakki: " + nimi + " pysakilta paasee pysakeille: ";
 
@@ -48,5 +51,5 @@ class Pysakki {
 
         return temp;
     }
-
+*/
 }
