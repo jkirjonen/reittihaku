@@ -6,6 +6,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * Pysäkki objekti sisältää pysäkin nimen ja listan pysäkeistä mihin sieltä pääsee, myös matka-ajat mukana
+ */
+
 class Pysakki {
     String nimi;
     ArrayList<Pair<String, Integer>> mihin;
@@ -41,15 +45,5 @@ class Pysakki {
     public String toString(){
         return nimi;
     }
-/*
-    public String toString(){
-        String temp = "Pysakki: " + nimi + " pysakilta paasee pysakeille: ";
 
-        for(int i=0;i<mihin.size();i++){
-            temp = temp + mihin.get(i).getValue0() + " aika: " + mihin.get(i).getValue1().toString() + "  ";
-        }
-
-        return temp;
-    }
-*/
 }

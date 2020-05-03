@@ -4,6 +4,11 @@ import org.javatuples.Pair;
 
 import java.util.ArrayList;
 
+/**
+ * Reittihaku tekee reittihaun käyttäen hyväksi valmiiksi luotuja aikatauluja valiten aina seuraavan pysäkin
+ * sillä perusteella mistä on lyhyin matka lopulliseen määränpäähän.
+ */
+
 class Reittihaku {
     String lahto;
     String loppu;
@@ -47,7 +52,6 @@ class Reittihaku {
                                         if (Integer.parseInt(table.getValue1().toString()) < pienin) {
                                             pienin = Integer.parseInt(table.getValue1().toString());
                                             nopein = pair;
-                                            //System.out.println("testi " + table.getValue0().toString() + taulu.getPysakki().getNimi());
 
                                         }
                                     }

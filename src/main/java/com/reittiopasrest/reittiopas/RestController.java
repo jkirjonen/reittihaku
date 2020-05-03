@@ -1,27 +1,20 @@
 package com.reittiopasrest.reittiopas;
 
+import org.apache.logging.log4j.core.util.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileReader;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
 
-	private final AtomicLong counter = new AtomicLong();
-	private static final String template = "Hello, %s!";
-	private final AtomicLong counter1 = new AtomicLong();
 	private String lahto;
 	private String loppu;
-
-	@GetMapping("/greeting")
-	public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return new Greeting(counter1.incrementAndGet(), String.format(template, name));
-	}
 
 	@GetMapping("/lahto")
 	public String asetaLahto(@RequestParam String lahto){
@@ -41,5 +34,17 @@ public class RestController {
 		return jsonArray;
 	}
 
+	@GetMapping("/reittiopas.json")
+	public String haejson() throws Exception {
+		String json = new Jiisoni().jiisoni;
+		return json;
+	}
 
+	@GetMapping("/testi")
+	public String testi() throws Exception{
+		lahto="a";
+		loppu="k";
+		String jsonArray = new Reittiopas().reittiopas(lahto,loppu);
+		return jsonArray;
+	}
 }

@@ -2,6 +2,10 @@ package com.reittiopasrest.reittiopas;
 
 import java.util.ArrayList;
 
+/**
+ * Linja sisältää värin ja linjalla sijaitsevat pysäkit
+ */
+
 public class Linja{
     String vari;
     ArrayList<Pysakki> pysakit;

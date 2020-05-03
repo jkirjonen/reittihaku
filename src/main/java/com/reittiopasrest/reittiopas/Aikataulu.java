@@ -4,6 +4,9 @@ import org.javatuples.Pair;
 
 import java.util.ArrayList;
 
+/**
+ * Aikatalussa luodaan pysakille aikataulu joka sisältää nopeimman reitin jokaiselle pysäkille.
+ */
 class Aikataulu {
     Pysakki pysakki;
     ArrayList<Pair<String, Integer>> aikataulu;
@@ -33,7 +36,7 @@ class Aikataulu {
         this.pysakit = pysakit;
     }
 
-
+    // luodaan valmis aikataulu jossa jokaisen pysäkin matka arvo on 1000
     public void luoAikataulu(Pysakki pysakki, ArrayList<Pysakki> pysakit ) {
         this.pysakki = pysakki;
         this.pysakit = pysakit;
@@ -47,7 +50,7 @@ class Aikataulu {
             }
         }
 
-
+        // tehdään matkahaku jokaselle pysäkille ja jos matkahaun tulos on lyhyempi kuin olemassa oleva asetetaan se
         for (int i = 0; i < aikataulu.size(); i++) {
             ArrayList<String> visited = new ArrayList<>();
             Integer aika = matkahaku(pysakki.getNimi(), aikataulu.get(i).getValue0(),visited);
@@ -58,11 +61,11 @@ class Aikataulu {
                 aikataulu.set(i,pair);
             }
         }
-        //System.out.println(aikataulu);
 
         this.aikataulu = aikataulu;
     }
 
+    // Rekursiivinen metodi joka käyttää Dikjstra tyyppistä valintaa
     public Integer matkahaku (String lahto, String loppu, ArrayList<String> visited){
         boolean perilla = false;
         Integer aika = 0;

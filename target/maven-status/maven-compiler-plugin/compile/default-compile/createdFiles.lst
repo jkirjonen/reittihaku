@@ -1,8 +1,8 @@
 com/reittiopasrest/reittiopas/Reittiopas.class
 com/reittiopasrest/reittiopas/Reittihaku.class
-com/reittiopasrest/reittiopas/Greeting.class
 com/reittiopasrest/reittiopas/ReittiopasApplication.class
 com/reittiopasrest/reittiopas/RestController.class
 com/reittiopasrest/reittiopas/Pysakki.class
+com/reittiopasrest/reittiopas/Jiisoni.class
 com/reittiopasrest/reittiopas/Aikataulu.class
 com/reittiopasrest/reittiopas/Linja.class

@@ -1,13 +1,10 @@
 package com.reittiopasrest.reittiopas;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.logging.log4j.core.util.IOUtils;
 import org.javatuples.Pair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileReader;
 import java.util.*;
 
 
@@ -19,8 +16,9 @@ public class Reittiopas {
         this.lahto = lahto;
         this.loppu = loppu;
 
+        // Haetaan pysakki tiedot jsonista
         ObjectMapper mapper = new ObjectMapper();
-        String json = IOUtils.toString(new FileReader(new File("reittiopas.json")));
+        String json = new Jiisoni().jiisoni;
         JSONObject jsonObject = new JSONObject(json);
         JSONArray pysakitJson = jsonObject.getJSONArray("pysakit");
         JSONArray tietJson = jsonObject.getJSONArray("tiet");
@@ -29,19 +27,17 @@ public class Reittiopas {
         ArrayList<Pysakki> pysakit = new ArrayList<>();
         ArrayList<String> visited = new ArrayList<>();
 
-
-
+        // Luodaan lista pysakki objekteja
         for (int i=0;i<pysakitJson.length();i++) {
             String nimi = pysakitJson.getString(i);
             Pysakki pysakki = new Pysakki(nimi,tietJson);
             pysakit.add(pysakki);
         }
 
-        //System.out.println(pysakit);
-
 
         ArrayList<Aikataulu> aikataulut = new ArrayList<>();
 
+        // luodaan aikataulut jokaiselle pysakille ja listataan ne
         for(Pysakki pysakki:pysakit){
             Aikataulu aikataulu = new Aikataulu();
             aikataulu.luoAikataulu(pysakki,pysakit);
@@ -51,7 +47,7 @@ public class Reittiopas {
         ArrayList<Linja> linjat = new ArrayList<>();
         List<String> linjatemp = new ArrayList<>(linjastotJson.keySet());
 
-
+        // Luodaan bussilinjastot molempiin suuntiin
         for(int i=0;i<2;i++) {
             String suunta = "M";
             if(i == 1){
@@ -76,10 +72,7 @@ public class Reittiopas {
             }
         }
 
-        //linjat.forEach(e -> System.out.println(e.getVari() + " Pysakit: " + e.getPysakit().toString()));
-
-        //aikataulut.forEach(e -> System.out.println(e.aikataulu.toString()));
-
+        // Tehdään reittihaku annetuilla parametreillä lahto ja loppu käyttäen hyväksi luotuja aikatauluja
         Reittihaku reittihaku = new Reittihaku();
         ArrayList<Pair<String, Integer>> reitti = reittihaku.reittihaku(lahto,loppu,aikataulut,pysakit,visited);
 
@@ -90,10 +83,9 @@ public class Reittiopas {
             }
         }
 
-        //reitti.forEach(e -> System.out.print(" -> " + e.getValue0()));;
-
         ArrayList<Pair<String,String>> linjareitti = new ArrayList<>();
 
+        // Sovitetaan saatu nopein reitti bussilinjoihin
         for(int pair=0;pair<reitti.size();pair++){
             linjalooppi:
             for(int linja=0;linja<linjat.size();linja++){
@@ -119,19 +111,13 @@ public class Reittiopas {
 
         }
 
-        //System.out.println(linjareitti.size());
-
-        //linjareitti.forEach(e -> System.out.print(e.getValue1() + " " + e.getValue0() + " -> "));
-
-
         JSONArray jsonArray = new JSONArray();
 
+        // Luodaan saadusta bussilinja reitistä JSonArray poistaen linjojen suunta merkit
         for(Pair pair:linjareitti){
             JSONObject jsonObject1 = new JSONObject().put(pair.getValue0().toString(),pair.getValue1().toString().substring(0,pair.getValue1().toString().length() -1));
             jsonArray.put(jsonObject1);
         }
-
-        //System.out.println(jsonArray);
 
         return jsonArray.toString();
 
