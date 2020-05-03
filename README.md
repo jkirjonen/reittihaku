@@ -39,6 +39,8 @@ Tekee reittihaun annetuilla parametreillä, kutsu palauttaa json array reitistä
     [{"A":"vihreä"},{"C":"vihreä"},{"E":"keltainen"},{"F":"keltainen"}]
 
 
+
+
     /testi
 
 Tekee testi haun jossa lahto ja loppu valmiiksi asetettuina. Palauttaa reitin json array muodossa
