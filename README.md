@@ -36,9 +36,7 @@ Asettaa määränpääksi pysäkin F, kutsu vastaa 'loppu asetettu'.
 
 Tekee reittihaun annetuilla parametreillä, kutsu palauttaa json array reitistä josta selviää nopein reitti pisteden välillä ja mitä linjaa tulisi käyttää. 
   
-    [{"A":"vihreä"},{"C":"vihreä"},{"E":"keltainen"},{"F":"keltainen"}]
-
-
+#### [{"A":"vihreä"},{"C":"vihreä"},{"E":"keltainen"},{"F":"keltainen"}]
 
 
     /testi
