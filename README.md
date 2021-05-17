@@ -1,6 +1,6 @@
 # Reittiopas REST
 
-Julkaisee REST rajapinnan liittyen Solidabiksen koodihaaste tehtävään. https://koodihaaste.solidabis.com/
+Julkaisee REST rajapinnan liittyen Solidabiksen koodihaaste tehtävään.
 
 ## Toiminnallisuus
 
@@ -10,13 +10,6 @@ Kun aikataulut on saatu laskettua tehdään varsinainen reittihaku käyttäen hy
 
 Seuraavaksi impletoidaan linjastot. Linjastoista luodaan molempiin suuntiin oma linjansa. Sitten otetaan reittihaun tulos ja katsotaan mihin linjastoihin reitti sopii. Jos reitillä on kaksi samaa pysäkkiä peräkkäin kuin jollain linjastolla niin merkataan yksi pysäkki lopulliselle reitille ja tehdään sama seuraavalle reitin pysäkille.
 
-
-## Yleistä
-Projekti on Spring boot projekti joka on tehty Javalla valmis rest rajapinta löytyy osoitteesta.
-https://reittiopas-1588425472525.azurewebsites.net/
-
-Tehtävälle on myös web app projekti joka löytyy
-https://github.com/jkirjonen/reittihaku-webApp
 
 Paikallisen asennuksen asennus ohjeet:
 
